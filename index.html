@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Letter to Sabu</title>
-  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Merriweather&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     * {
       box-sizing: border-box;
@@ -13,75 +13,34 @@
       margin: 0;
       padding: 0;
       height: 100%;
+      overflow: hidden; /* Lock scroll initially */
       background: #0b1a2b;
       color: #f5e9d3;
-      font-family: 'Merriweather', serif;
-      overflow: hidden; /* Prevent scroll until start */
+      font-family: 'Indie Flower', 'Quicksand', cursive;
       scroll-behavior: smooth;
     }
 
     body::before {
       content: "";
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       pointer-events: none;
-      background: radial-gradient(circle 1000px at 50% 30%, rgba(255,243,224,0.15), transparent 70%);
+      background: radial-gradient(circle 1000px at 50% 30%, rgba(255, 243, 224, 0.15), transparent 70%);
       animation: flicker 3s infinite;
       z-index: 0;
     }
-
     @keyframes flicker {
       0%, 100% { opacity: 0.15; }
       50% { opacity: 0.25; }
     }
 
-    #start-overlay {
-      cursor: pointer;
-      user-select: none;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      background: #0b1a2b;
-      color: #f5e9d3;
-      font-family: 'Indie Flower', cursive;
-      font-size: 2.5rem;
-      text-align: center;
-      z-index: 10;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      left: 0;
-    }
-
-    #start-overlay p {
-      font-size: 1.3rem;
-      margin-top: 10px;
-    }
-
-    .cover {
-      height: 100vh;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 0 20px;
-      font-size: 3rem;
-      font-family: 'Indie Flower', cursive;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-align: center;
-      line-height: 1.4;
-    }
-
     .container {
+      position: relative;
+      z-index: 1;
       max-width: 600px;
       margin: 0 auto;
       padding: 40px 20px;
-      position: relative;
-      z-index: 1;
     }
 
     .page {
@@ -94,14 +53,32 @@
       opacity: 0;
       transform: translateY(30px) scale(0.97);
       transition: opacity 1.3s ease, transform 1.3s ease;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       line-height: 1.6;
-      font-family: 'Merriweather', serif;
+      user-select: none;
     }
 
     .page.visible {
       opacity: 1;
       transform: translateY(0) scale(1);
+    }
+
+    .cover {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 10px;
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.3;
+      opacity: 1 !important;
+      transform: translateY(0) scale(1) !important;
+      z-index: 1;
+      user-select: text;
     }
 
     .final {
@@ -112,6 +89,48 @@
       position: relative;
     }
 
+    /* Intro overlay styles */
+    #start-overlay {
+      cursor: pointer;
+      user-select: none;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: #0b1a2b;
+      color: #f5e9d3;
+      font-family: 'Indie Flower', cursive;
+      font-size: 3rem;
+      z-index: 10;
+      position: fixed;
+      width: 100%;
+    }
+
+    #scroll-hint {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Segoe UI', sans-serif;
+      color: #f5e9d3;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: pulse 2.5s ease-in-out infinite;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.7s ease;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 0.3; }
+    }
+
     #heart-popup {
       position: absolute;
       bottom: -70px;
@@ -119,6 +138,7 @@
       transform: translateX(-50%) scale(0);
       font-size: 3rem;
       color: #ff6b81;
+      user-select: none;
       opacity: 0;
       transition: transform 0.9s ease, opacity 0.9s ease;
       pointer-events: none;
@@ -135,100 +155,88 @@
       50% { transform: translateX(-50%) scale(1.15); }
     }
 
-    #scroll-hint {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Segoe UI', sans-serif;
-      color: #f5e9d3;
-      font-weight: 600;
-      font-size: 1.1rem;
-      opacity: 0;
-      animation: pulse 2.5s ease-in-out infinite;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      pointer-events: none;
-      transition: opacity 0.7s ease;
-      z-index: 5;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 0.3; }
-    }
-
     @media (max-width: 400px) {
-      .page {
-        font-size: 1.3rem;
-        padding: 0 15px;
-      }
-      .cover {
-        font-size: 2.2rem;
-      }
+      .page { font-size: 1.3rem; }
+      #scroll-hint { font-size: 1rem; }
+      .cover { font-size: 2.3rem; }
     }
   </style>
 </head>
 <body>
 
-<div id="start-overlay" tabindex="0">
-  🕯️
-  <p>"For you, Allu... only if you feel like reading."</p>
+<!-- Intro overlay -->
+<div id="start-overlay" role="button" tabindex="0">
+  <div>🕯️</div>
+  <p style="font-size:1.5rem; margin-top:10px;">"For you, Allu... only if you feel like reading."</p>
 </div>
 
-<div class="page cover visible" tabindex="0">To Sabu,<br>the one I haven’t met face to face...</div>
+<!-- Cover page (first scrollable page) -->
+<div class="page cover" id="cover-page" tabindex="0" style="opacity: 0; transform: translateY(30px) scale(0.97);">
+  To Sabu,<br>the one I haven’t met face to face...
+</div>
 
+<!-- Scrollable content container -->
 <div class="container" id="content" aria-live="polite" aria-atomic="true" style="display:none;">
   <div class="page">I have heard your voice on the phone,<br>but I still don’t know how to start talking properly.</div>
   <div class="page">I call you Allu sometimes...<br>it just feels sweet, like a name that brings you closer.</div>
-  <div class="page">Truth is, I never know the right way to begin.<br>I end up talking nonsense or being quiet.</div>
-  <div class="page">I know I often say naughty or silly things...<br>maybe too much sometimes.<br>And I wonder if it annoys you.</div>
-  <div class="page">But deep inside, it’s never about that.<br>It’s just... I don’t know how else to say I miss you.</div>
+  <div class="page">Truth is, I never know the right way to begin.<br>My mind goes blank, and I end up talking nonsense or being quiet.</div>
+  <div class="page">I know I often say naughty or silly things...<br>maybe too much sometimes.<br>And I wonder if it annoys you, or makes you uncomfortable.</div>
+  <div class="page">But deep inside, it’s never about that.<br>It’s just... I don’t know how else to say I miss you,<br>or how much I want to know you better.</div>
   <div class="page">Sometimes I take too long to reply,<br>or I might seem busy or distant.</div>
-  <div class="page">But just because I’m silent<br>doesn’t mean I’ve forgotten you.<br>You’re quietly in my thoughts.</div>
+  <div class="page">But just because I’m silent<br>doesn’t mean I’ve forgotten you.<br>You're there — quietly living in my thoughts.</div>
   <div class="page">We don’t really talk much,<br>and sometimes there’s silence between us.</div>
   <div class="page">But even in that silence,<br>I feel like we understand each other somehow.</div>
   <div class="page">You may not say much to me,<br>but I feel your presence quietly beside me.</div>
+  <div class="page">There are no big stories or jokes,<br>but the connection we share feels real and strong.</div>
   <div class="page">This letter is for those small feelings,<br>that are hard to say out loud.</div>
-  <div class="page">I might still be a stranger to you,<br>just a name in your inbox,<br>trying to feel closer.</div>
+  <div class="page">For all the moments we didn’t share,<br>I keep them safe in my heart.</div>
+  <div class="page">I might still be a stranger to you.<br>Just someone with a name in your inbox,<br>trying gently to feel a little closer.</div>
   <div class="page">So if nothing else,<br>think of me as one of your well-wishers.<br>Quiet. Soft. Honest.</div>
-  <div class="page final">
-    Even if we never meet face to face,<br>this quiet bond will always be special to me.
-    <div id="heart-popup">❤️</div>
-  </div>
+  <div class="page final">Even if we never meet face to face,<br>this quiet bond will always be special to me.<div id="heart-popup">❤️</div></div>
 </div>
 
-<div id="scroll-hint">Scroll down <span style="font-size: 1.5rem;">↓</span></div>
+<div id="scroll-hint" aria-hidden="true">
+  Scroll down <span style="font-size: 1.5rem;">&#8595;</span>
+</div>
 
 <script>
-  const html = document.documentElement;
   const startOverlay = document.getElementById('start-overlay');
+  const coverPage = document.getElementById('cover-page');
   const content = document.getElementById('content');
   const scrollHint = document.getElementById('scroll-hint');
   const heartPopup = document.getElementById('heart-popup');
   const finalPage = document.querySelector('.page.final');
+  const html = document.documentElement;
+  const body = document.body;
 
-  const ambientAudio = new Audio('soft.mp3');
+  const ambientAudio = new Audio('soft.mp3'); // replace with your soft audio file
   ambientAudio.loop = true;
   ambientAudio.volume = 0.15;
 
-  html.style.overflow = 'hidden';
-
   function startExperience() {
+    // Hide intro overlay
     startOverlay.style.display = 'none';
+
+    // Show cover page and container
+    coverPage.style.opacity = '1';
+    coverPage.style.transform = 'translateY(0) scale(1)';
     content.style.display = 'block';
-    scrollHint.style.opacity = '1';
+
+    // Unlock scrolling on both html and body
     html.style.overflowY = 'auto';
+    body.style.overflowY = 'auto';
+
     ambientAudio.play();
+
     observePages();
+
+    // Show scroll hint
+    scrollHint.style.opacity = '1';
   }
 
   startOverlay.addEventListener('click', startExperience);
-  startOverlay.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      startExperience();
-    }
+  startOverlay.addEventListener('keypress', e => {
+    if (e.key === 'Enter' || e.key === ' ') startExperience();
   });
 
   function observePages() {
@@ -247,9 +255,7 @@
   const hintObserver = new IntersectionObserver(entries => {
     if (entries[0].isIntersecting) {
       scrollHint.style.opacity = '0';
-      setTimeout(() => {
-        if (scrollHint.parentNode) scrollHint.parentNode.removeChild(scrollHint);
-      }, 700);
+      setTimeout(() => scrollHint.remove(), 700);
       heartPopup.classList.add('visible');
     }
   }, { threshold: 0.6 });
